@@ -1,0 +1,4 @@
+ofxBlobTracker
+ofxNetwork
+ofxOpenCv
+ofxXmlSettings
