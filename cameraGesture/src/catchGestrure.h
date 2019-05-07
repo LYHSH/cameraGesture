@@ -78,7 +78,7 @@ private:
 	void blobDeleted(ofxBlob &_blob);
 
 	float const touchTimeLen = 1.0f;
-	float const unTouchTimeLen = 1.0f;
+	float const unTouchTimeLen = 1.5f;
 	bool isUntouching;
 	float unTouchTimer;
 

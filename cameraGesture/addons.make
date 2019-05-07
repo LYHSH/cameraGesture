@@ -1,4 +1,7 @@
 ofxBlobTracker
+ofxHardIdentification
+ofxMD5Convert
+ofxMyAppControl
 ofxNetwork
 ofxOpenCv
 ofxXmlSettings

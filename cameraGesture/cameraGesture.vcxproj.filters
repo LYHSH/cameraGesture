@@ -25,6 +25,33 @@
 		<ClCompile Include="..\..\..\..\..\addons\ofxBlobTracker\src\ofxContourFinder.cpp">
 			<Filter>addons\ofxBlobTracker\src</Filter>
 		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxBaseBoard.cpp">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxCPU.cpp">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxHardIdentification.cpp">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxIdentificationMgr.cpp">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxMD5Convert\src\cmdConverter.cpp">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxMD5Convert\src\md5Converter.cpp">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxMD5Convert\src\nullConverter.cpp">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxMD5Convert\src\timeSynMd5Converter.cpp">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\..\..\addons\ofxMyAppControl\src\ofxAppControl.cpp">
+			<Filter>addons\ofxMyAppControl\src</Filter>
+		</ClCompile>
 		<ClCompile Include="..\..\..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp">
 			<Filter>addons\ofxNetwork\src</Filter>
 		</ClCompile>
@@ -83,6 +110,24 @@
 		</Filter>
 		<Filter Include="addons\ofxBlobTracker\src">
 			<UniqueIdentifier>{5C8A2232-0B0E-C23D-737D-F526}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxHardIdentification">
+			<UniqueIdentifier>{8F1B6FE4-EEA4-73D8-1E37-8F55}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxHardIdentification\src">
+			<UniqueIdentifier>{FFDF7D92-383F-85DA-1259-CBC6}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxMD5Convert">
+			<UniqueIdentifier>{0A4C8083-4F49-473E-FCB3-F7A9}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxMD5Convert\src">
+			<UniqueIdentifier>{F4EE7640-D3D0-A71C-A9F1-294B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxMyAppControl">
+			<UniqueIdentifier>{0F93E797-814C-FCC1-3B13-6B70}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxMyAppControl\src">
+			<UniqueIdentifier>{729A2B20-BC3A-5798-9397-9D4A}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxNetwork">
 			<UniqueIdentifier>{01A15744-29A6-108D-08E9-83A7}</UniqueIdentifier>
@@ -208,6 +253,36 @@
 		</ClInclude>
 		<ClInclude Include="..\..\..\..\..\addons\ofxBlobTracker\src\ofxContourFinder.h">
 			<Filter>addons\ofxBlobTracker\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxBaseBoard.h">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxCPU.h">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxHardIdentification.h">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxHardIdentification\src\ofxIdentificationMgr.h">
+			<Filter>addons\ofxHardIdentification\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxMD5Convert\src\cmdConverter.h">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxMD5Convert\src\md5.h">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxMD5Convert\src\md5Converter.h">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxMD5Convert\src\nullConverter.h">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxMD5Convert\src\timeSynMd5Converter.h">
+			<Filter>addons\ofxMD5Convert\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\..\..\addons\ofxMyAppControl\src\ofxAppControl.h">
+			<Filter>addons\ofxMyAppControl\src</Filter>
 		</ClInclude>
 		<ClInclude Include="..\..\..\..\..\addons\ofxNetwork\src\ofxNetwork.h">
 			<Filter>addons\ofxNetwork\src</Filter>

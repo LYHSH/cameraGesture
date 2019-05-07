@@ -267,8 +267,6 @@ void catchGestrure::caThread() {
 		{
 			blobTracker->refreshBack(*blockGrayImage);
 			bRefreshBack = false;
-
-			cout << "123" << endl;
 		}
 
 		blobTracker->update(*blockGrayImage);

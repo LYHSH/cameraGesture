@@ -1,7 +1,12 @@
 #include "ofApp.h"
-
+#include "ofxIdentificationMgr.h"
+#include "ofxAppControl.h"
 //--------------------------------------------------------------
 void ofApp::setup(){
+	ofxIdentificationMgr::setup();
+	ofxAppControl::setup("cameraGestureV1.0_hui");
+
+
 	catcher.setup();
 
 	{
@@ -20,7 +25,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	ofSetWindowTitle(ofToString(ofGetFrameRate()));
+	ofxIdentificationMgr::update(); 
+	ofxAppControl::udpate();
 	catcher.update();
 }
 
