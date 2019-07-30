@@ -2,15 +2,15 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxXmlSettings.h"
-#include "affineBox.h"
 #include "ofxBlobTracker.h"
 #include "mycontants.h"
 #include "ofxUDPManager.h"
+#include "ofxCameraManagerUI.h"
 
 #define IMG_WIDTH 320
 #define IMG_HEIGHT 240
 
-class catchGestrure : public ofThread
+class catchGestrure
 {
 public:
 	catchGestrure();
@@ -27,44 +27,13 @@ public:
 
 	void keyPressed(int key);
 private:
-	void start() {
-		startThread(true, false);   // blocking, verbose
-	}
-
-	void stop() {
-		stopThread();
-	}
-
-	void threadedFunction()
-	{
-		while (isThreadRunning())
-		{
-			caThread();
-		}
-	}
-
-	void caThread();
-	ofVideoGrabber* 		vidGrabber;
-
-	ofxCvColorImage         *colorImg;    //源(彩色)图像
-	ofxCvColorImage 	*affinedImg;	  //仿射变换后的的图像
+	string getPath()const;
+	catchMovement * catcher;
+	ofFbo *fbo;
 	ofxCvGrayscaleImage *grayImage;		  //灰度图
-	ofxCvGrayscaleImage * blockGrayImage;	//捕获灰度图
-
-	ofxCvGrayscaleImage diff;			//Absolute difference of the frame
-	ofxCvFloatImage diffFloat;			//Amplified difference images;
-	ofxCvFloatImage bufferFloat;		//Buffer image;
-
-
-	ofPoint srcPts[4];                 //源仿射数据数组
-	ofPoint dstPts[4];                 //目标仿射数据数组
-	affineBox affine;
-	void setDstPts(ofVec2f* dispts);
 
 
 	ofxBlobTracker * blobTracker;
-
-	ofVec2f offset;
 
 	void clear();
 
@@ -81,8 +50,8 @@ private:
 	void blobMoved(ofxBlob &_blob);
 	void blobDeleted(ofxBlob &_blob);
 
-	float const touchTimeLen = 1.0f;
-	float const unTouchTimeLen = 1.5f;
+	float const touchTimeLen = 2.0f;
+	float const unTouchTimeLen = 0.5f;
 	bool isUntouching;
 	float unTouchTimer;
 

@@ -1,0 +1,7 @@
+<config>
+    <fDynamicRate>46.975368500</fDynamicRate>
+    <catchMode>0</catchMode>
+    <threshold>35</threshold>
+    <assimilateRate>0.850000024</assimilateRate>
+    <diffSensitivity>0.899999976</diffSensitivity>
+</config>

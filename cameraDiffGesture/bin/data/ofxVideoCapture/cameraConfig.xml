@@ -1,0 +1,17 @@
+<singleScreenW>1920</singleScreenW>
+<singleScreenH>1080</singleScreenH>
+<pixelSpace>5</pixelSpace>
+<camera>
+    <deviceId>0</deviceId>
+    <offsetX>0.000000000</offsetX>
+    <offsetY>0.000000000</offsetY>
+    <width>0.000000000</width>
+    <height>0.000000000</height>
+</camera>
+<camera>
+    <deviceId>1</deviceId>
+    <offsetX>1920.000000000</offsetX>
+    <offsetY>0.000000000</offsetY>
+    <width>0.000000000</width>
+    <height>0.000000000</height>
+</camera>

@@ -1,0 +1,11 @@
+ofxBlobTracker
+ofxHardIdentification
+ofxImGui
+ofxMD5Convert
+ofxMyAppControl
+ofxNetwork
+ofxOpenCv
+ofxOsc
+ofxTuioWrapper
+ofxVideoCapture
+ofxXmlSettings

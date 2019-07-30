@@ -9,7 +9,6 @@ catchGestrure::catchGestrure()
 
 catchGestrure::~catchGestrure()
 {
-	waitForThread(true);
 	clear();
 
 	ofRemoveListener(blobTracker->blobAdded, this, &catchGestrure::blobAdded);
@@ -17,61 +16,41 @@ catchGestrure::~catchGestrure()
 	ofRemoveListener(blobTracker->blobDeleted, this, &catchGestrure::blobDeleted);
 }
 
+string catchGestrure::getPath()const
+{
+	return "ofxVideoCapture/";
+}
+
 void catchGestrure::setup()
 {
-	//摄像头初始化！
 	{
-		vidGrabber = new ofVideoGrabber();
-
-		vidGrabber->listDevices();
-
-		vidGrabber->setDeviceID(0);
-		vidGrabber->setVerbose(true);
-		vidGrabber->initGrabber(IMG_WIDTH, IMG_HEIGHT);
+		catcher = new catchMovement();
+		catcher->CMT_setup(IMG_WIDTH, IMG_HEIGHT, 5, getPath() + "CMT_data/affine" + ofToString(0) + ".xml", 0);
+		catcher->loadConfig(getPath() + "CMT_data/config" + ofToString(0) + ".xml");
 	}
-	
-	//仿射矩阵
-	{
-		//仿射源矩阵
-		srcPts[0] = ofVec2f(0, IMG_HEIGHT);
-		srcPts[1] = ofVec2f(IMG_WIDTH, IMG_HEIGHT);
-		srcPts[2] = ofVec2f(IMG_WIDTH, 0);
-		srcPts[3] = ofVec2f(0, 0);
-
-		//仿射目标矩阵
-		dstPts[0] = ofVec2f(0, IMG_HEIGHT);
-		dstPts[1] = ofVec2f(IMG_WIDTH, IMG_HEIGHT);
-		dstPts[2] = ofVec2f(IMG_WIDTH, 0);
-		dstPts[3] = ofVec2f(0, 0);
-
-		affine.setup("affine.xml");
-
-		setDstPts(affine.getBoxPts());
-	}
-
 	//纹理内存申请
 	{
-		affinedImg = new ofxCvColorImage();
-		affinedImg->allocate(IMG_WIDTH, IMG_HEIGHT);
-		colorImg = new ofxCvColorImage();
-		colorImg->allocate(IMG_WIDTH, IMG_HEIGHT);
 
 		grayImage = new ofxCvGrayscaleImage();
 		grayImage->allocate(IMG_WIDTH, IMG_HEIGHT);
 
-		blockGrayImage = new ofxCvGrayscaleImage();
-		blockGrayImage->allocate(IMG_WIDTH, IMG_HEIGHT);
+		fbo = new ofFbo();
+		fbo->allocate(IMG_WIDTH, IMG_HEIGHT, GL_LUMINANCE);
 
-		diff.allocate(IMG_WIDTH, IMG_HEIGHT);
-		diffFloat.allocate(IMG_WIDTH, IMG_HEIGHT);
-		bufferFloat.allocate(IMG_WIDTH, IMG_HEIGHT);
+		fbo->begin();
+		ofClear(0, 0, 0, 255);
+		fbo->end();
+
+
+		
 	}
 
 	{
 		blobTracker = new ofxBlobTracker();
-
-		offset.set(10, 10);
-
+		ofPixels pixel;
+		fbo->readToPixels(pixel);
+		grayImage->setFromPixels(pixel);
+		blobTracker->refreshBack(*grayImage);
 		bRefreshBack = true;
 
 		threold = 100;
@@ -88,12 +67,14 @@ void catchGestrure::setup()
 	{
 		isUntouching = false;
 	}
-
-	start();
 }
 
 void catchGestrure::update()
 {
+	*grayImage = catcher->bufferFloat;
+	blobTracker->update(*grayImage, threold, 3);
+
+
 	auto ite = blobs.begin();
 	while (ite != blobs.end())
 	{
@@ -103,6 +84,7 @@ void catchGestrure::update()
 
 		if (movers.size() > 5)
 		{
+			//cout << "xxxxx:"<<movers.size() << endl;
 			float xOffset = movers.back().blob.centroid.x - movers.front().blob.centroid.x;
 			float yOffset = movers.back().blob.centroid.y - movers.front().blob.centroid.y;
 
@@ -159,20 +141,8 @@ void catchGestrure::update()
 void catchGestrure::draw()
 {
 	ofPushMatrix();
-	lock();
-	ofTranslate(offset.x, offset.y);
-	
-	colorImg->draw(0, 0, IMG_WIDTH, IMG_HEIGHT);
-	affine.drawBox();
-
-	ofTranslate(IMG_WIDTH + 10,0);
-	affinedImg->draw(0, 0, IMG_WIDTH, IMG_HEIGHT);
+	//catcher->CMT_draw();
 	blobTracker->draw();
-
-	ofTranslate(IMG_WIDTH + 10.0f,0.0);
-	grayImage->draw(0, 0, IMG_WIDTH, IMG_HEIGHT);
-	unlock();
-
 	ofPopMatrix();
 
 	ofPushStyle();
@@ -189,24 +159,25 @@ void catchGestrure::draw()
 }
 
 void catchGestrure::mouseDragged(int x, int y) {
-	affine.mouseDragged(x - offset.x, y - offset.y);
-	setDstPts(affine.getBoxPts());
+	catcher->CMT_mouseDragged(x, y);
 }
 
 void catchGestrure::mouseMoved(int x, int y)
 {
-	affine.mouseMoved(x - offset.x, y - offset.y);
+	catcher->CMT_mouseMoved(x, y);
 }
 
 void catchGestrure::keyPressed(int key) {
+	catcher->CMT_keyPressed(key);
+
 	if (key == 's')
 	{
-		affine.saveMessage();
 		saveSetting();
+		catcher->configSave();
 	}
 	if (key == OF_KEY_F3)
 	{
-		vidGrabber->videoSettings();
+		
 	}
 	if (OF_KEY_RETURN == key)
 	{
@@ -236,69 +207,17 @@ void catchGestrure::keyPressed(int key) {
 
 void catchGestrure::mousePressed(int x, int y)
 {
-	affine.mousePressed(x - offset.x, y - offset.y);
+	catcher->CMT_mousePressed(x, y);
 }
 
 void catchGestrure::mouseReleased(int x, int y)
 {
-	affine.mouseReleased(x - offset.x, y - offset.y);
+	catcher->CMT_mouseReleased(x, y);
 }
 
-void catchGestrure::setDstPts(ofVec2f* affinePts) {
-	for (int i = 0; i < 4; i++)
-	{
-		srcPts[i] = affinePts[i];
-	}
-}
-
-void catchGestrure::caThread() {
-	ofSleepMillis(50);		// 线程等待时间!
-
-	lock();
-	vidGrabber->update();
-	//获取源图
-	if (vidGrabber->isFrameNew())
-	{
-
-		//获取摄像头画面并进行仿射变换
-		colorImg->setFromPixels(vidGrabber->getPixels().getPixels(), IMG_WIDTH, IMG_HEIGHT);
-		affinedImg->warpIntoMe(*colorImg, srcPts, dstPts);//仿射变换！
-
-		*grayImage = *affinedImg;
-		grayImage->threshold(threold);
-		*blockGrayImage = *grayImage;
-		if (bRefreshBack)
-		{
-			blobTracker->refreshBack(*blockGrayImage);
-			bRefreshBack = false;
-		}
-
-		blobTracker->update(*blockGrayImage);
-	}
-	unlock();
-}
 
 void catchGestrure::clear()
 {
-	if (vidGrabber)
-	{
-		vidGrabber->close();
-		delete vidGrabber;
-		vidGrabber = NULL;
-	}
-
-	if (colorImg)
-	{
-		delete colorImg;
-		colorImg = NULL;
-	}
-
-	if (affinedImg)
-	{
-		delete affinedImg;
-		affinedImg = NULL;
-	}
-
 	if (grayImage)
 	{
 		delete grayImage;
@@ -326,6 +245,7 @@ void catchGestrure::saveSetting()
 }
 
 void catchGestrure::blobAdded(ofxBlob &_blob) {
+	if (isUntouching)return;
 //	ofLog(OF_LOG_NOTICE, "Blob ID " + ofToString(_blob.id) + " added" + " x:" + ofToString(_blob.centroid.x) + " y:" + ofToString(_blob.centroid.y));
 
 	BLOB_DATA data;
